@@ -7,10 +7,11 @@
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkConf
 import org.apache.spark.rdd.RDD
+import scala.math.max;
 
 object Warmup {
   def main(args: Array[String]) {
-    val logFile = "/openup/text.txt" // Should be some file on your system
+    val logFile = "file:///openup/text.txt" // Should be some file on your system
     val conf = new SparkConf().setAppName("Simple Application")
     val sc = new SparkContext(conf)
     val fileContent = sc.textFile(logFile, 2).cache()
@@ -28,7 +29,7 @@ object Warmup {
      This method prints the number of lines of text
      */
 
-    println("Question 1 is not implemented")
+    println("File number of lines " + fileContent.count())
   }
 
   def maxLine(fileContent: RDD[String]): Unit = {
@@ -37,7 +38,8 @@ object Warmup {
     This method prints the maximum length of the lines of the text
      */
 
-    println("Question 2 is not implemented")
+    println("Maximum file length " + fileContent.map(line => line.length)
+      .reduce((a, b) => max(a, b)))
   }
 
   def maxWordsPerLine(fileContent: RDD[String]): Unit = {
@@ -46,7 +48,8 @@ object Warmup {
     This method prints the maximum number of words a line of the text contains
      */
 
-    println("Question 3 is not implemented")
+    println("Max words per line " + fileContent.map(line => line.split(" ").length)
+      .reduce((a, b) => max(a, b)))
   }
 
   def countDistinctWords(fileContent: RDD[String]): Unit = {
@@ -55,7 +58,9 @@ object Warmup {
     This method prints the count of distinct words
      */
 
-    println("Question 4 is not implemented")
+    println("Distinct words : " + fileContent.flatMap(line => line.split(" "))
+      .distinct()
+      .count())
   }
 
   def averageLineLength(fileContent: RDD[String]): Unit = {
@@ -64,6 +69,9 @@ object Warmup {
     This method prints the average length of lines
      */
 
-    println("Question 5 is not implemented")
+    val totalLength = fileContent.map(line => line.length).reduce((a, b) => a + b)
+    val lineCount = fileContent.count()
+
+    println("Average line length : " + (totalLength / lineCount))
   }
 }

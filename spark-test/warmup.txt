@@ -1,0 +1,12 @@
+bash-4.1# spark-submit --class Warmup target/scala-2.11/spark-test_2.11-1.0.jar
+
+File number of lines 110
+
+Maximum file length 1882
+
+Max words per line 355
+
+Distinct words : 1424
+
+Average line length : 176
+
