@@ -1,0 +1,209 @@
+DESCRIBE TABLES
+
+ratings         user_trendiness  user  intersection  user_affinity
+recommandation  items            rec   friendship
+
+cqlsh:test> DESCRIBE TABLE ratings ;
+
+CREATE TABLE test.ratings (
+    id_people bigint,
+    id_item bigint,
+    rating double,
+    PRIMARY KEY (id_people, id_item)
+) WITH CLUSTERING ORDER BY (id_item ASC)
+    AND bloom_filter_fp_chance = 0.01
+    AND caching = '{"keys":"ALL", "rows_per_partition":"NONE"}'
+    AND comment = ''
+    AND compaction = {'class': 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy'}
+    AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND dclocal_read_repair_chance = 0.1
+    AND default_time_to_live = 0
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair_chance = 0.0
+    AND speculative_retry = '99.0PERCENTILE';
+
+cqlsh:test> DESCRIBE TABLE rec ;
+rec             recommandation
+cqlsh:test> DESCRIBE TABLE recommandation  ;
+
+CREATE TABLE test.recommandation (
+    id_origin bigint,
+    score double,
+    id_dest bigint,
+    PRIMARY KEY (id_origin, score, id_dest)
+) WITH CLUSTERING ORDER BY (score ASC, id_dest ASC)
+    AND bloom_filter_fp_chance = 0.01
+    AND caching = '{"keys":"ALL", "rows_per_partition":"NONE"}'
+    AND comment = ''
+    AND compaction = {'class': 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy'}
+    AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND dclocal_read_repair_chance = 0.1
+    AND default_time_to_live = 0
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair_chance = 0.0
+    AND speculative_retry = '99.0PERCENTILE';
+
+cqlsh:test> DESCRIBE TABLE user  ;
+
+CREATE TABLE test.user (
+    id bigint PRIMARY KEY,
+    name text
+) WITH bloom_filter_fp_chance = 0.01
+    AND caching = '{"keys":"ALL", "rows_per_partition":"NONE"}'
+    AND comment = ''
+    AND compaction = {'class': 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy'}
+    AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND dclocal_read_repair_chance = 0.1
+    AND default_time_to_live = 0
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair_chance = 0.0
+    AND speculative_retry = '99.0PERCENTILE';
+
+cqlsh:test> DESCRIBE TABLE user_
+user_affinity    user_trendiness
+cqlsh:test> DESCRIBE TABLE user_affinity ;
+
+CREATE TABLE test.user_affinity (
+    id_origin bigint,
+    score double,
+    id_dest bigint,
+    PRIMARY KEY (id_origin, score, id_dest)
+) WITH CLUSTERING ORDER BY (score ASC, id_dest ASC)
+    AND bloom_filter_fp_chance = 0.01
+    AND caching = '{"keys":"ALL", "rows_per_partition":"NONE"}'
+    AND comment = ''
+    AND compaction = {'class': 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy'}
+    AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND dclocal_read_repair_chance = 0.1
+    AND default_time_to_live = 0
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair_chance = 0.0
+    AND speculative_retry = '99.0PERCENTILE';
+
+cqlsh:test> DESCRIBE TABLE user_trendiness ;
+
+CREATE TABLE test.user_trendiness (
+    id bigint,
+    score double,
+    PRIMARY KEY (id, score)
+) WITH CLUSTERING ORDER BY (score ASC)
+    AND bloom_filter_fp_chance = 0.01
+    AND caching = '{"keys":"ALL", "rows_per_partition":"NONE"}'
+    AND comment = ''
+    AND compaction = {'class': 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy'}
+    AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND dclocal_read_repair_chance = 0.1
+    AND default_time_to_live = 0
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair_chance = 0.0
+    AND speculative_retry = '99.0PERCENTILE';
+
+cqlsh:test> DESCRIBE TABLE intersection  ;
+
+CREATE TABLE test.intersection (
+    id_origin bigint,
+    id_dest bigint,
+    count bigint,
+    PRIMARY KEY (id_origin, id_dest)
+) WITH CLUSTERING ORDER BY (id_dest ASC)
+    AND bloom_filter_fp_chance = 0.01
+    AND caching = '{"keys":"ALL", "rows_per_partition":"NONE"}'
+    AND comment = ''
+    AND compaction = {'class': 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy'}
+    AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND dclocal_read_repair_chance = 0.1
+    AND default_time_to_live = 0
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair_chance = 0.0
+    AND speculative_retry = '99.0PERCENTILE';
+
+cqlsh:test> DESCRIBE TABLES;
+
+ratings         user_trendiness  user  intersection  user_affinity
+recommandation  items            rec   friendship
+
+cqlsh:test> DESCRIBE TABLE item;
+
+Column family 'item' not found
+cqlsh:test> DESCRIBE TABLE items;
+
+CREATE TABLE test.items (
+    id bigint PRIMARY KEY,
+    name text
+) WITH bloom_filter_fp_chance = 0.01
+    AND caching = '{"keys":"ALL", "rows_per_partition":"NONE"}'
+    AND comment = ''
+    AND compaction = {'class': 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy'}
+    AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND dclocal_read_repair_chance = 0.1
+    AND default_time_to_live = 0
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair_chance = 0.0
+    AND speculative_retry = '99.0PERCENTILE';
+
+cqlsh:test> DESCRIBE TABLE rec;
+
+CREATE TABLE test.rec (
+    id_o bigint,
+    id_dest bigint,
+    score double,
+    PRIMARY KEY (id_o, id_dest)
+) WITH CLUSTERING ORDER BY (id_dest ASC)
+    AND bloom_filter_fp_chance = 0.01
+    AND caching = '{"keys":"ALL", "rows_per_partition":"NONE"}'
+    AND comment = ''
+    AND compaction = {'class': 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy'}
+    AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND dclocal_read_repair_chance = 0.1
+    AND default_time_to_live = 0
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair_chance = 0.0
+    AND speculative_retry = '99.0PERCENTILE';
+CREATE INDEX rec_score_idx ON test.rec (score);
+
+cqlsh:test> DESCRIBE TABLE friendship ;
+
+CREATE TABLE test.friendship (
+    id_origin bigint,
+    id_dest bigint,
+    PRIMARY KEY (id_origin, id_dest)
+) WITH CLUSTERING ORDER BY (id_dest ASC)
+    AND bloom_filter_fp_chance = 0.01
+    AND caching = '{"keys":"ALL", "rows_per_partition":"NONE"}'
+    AND comment = ''
+    AND compaction = {'class': 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy'}
+    AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND dclocal_read_repair_chance = 0.1
+    AND default_time_to_live = 0
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair_chance = 0.0
+    AND speculative_retry = '99.0PERCENTILE';
+
+cqlsh:test> DESCRIBE TABLE friendship ;
